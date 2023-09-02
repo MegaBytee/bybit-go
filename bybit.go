@@ -22,6 +22,16 @@ type Response struct {
 	Time       int         `json:"time"`
 }
 
+func ExecuteGet(params string, a any) Response {
+	body, _ := Client.GetRequest(params)
+	return GetResponse(body, a)
+}
+
+/*
+func ExecutePost() Response {
+
+}*/
+
 func GetResponse(body []byte, a any) Response {
 	var r Response
 	err := json.Unmarshal(body, &r)

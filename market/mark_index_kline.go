@@ -8,7 +8,6 @@ import "github.com/MegaBytee/bybit-go"
 func GetIndexPriceKline(p KlineParams) (bybit.Response, Kline) {
 	bybit.Client.SetEndPoint("/v5/market/index-price-kline")
 	params := p.getParams()
-	body, _ := bybit.Client.GetRequest(params)
 	y := Kline{}
-	return bybit.GetResponse(body, &y), y
+	return bybit.ExecuteGet(params, &y), y
 }

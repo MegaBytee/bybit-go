@@ -43,7 +43,6 @@ func (p *KlineParams) getParams() string {
 func GetKline(p KlineParams) (bybit.Response, Kline) {
 	bybit.Client.SetEndPoint("/v5/market/kline")
 	params := p.getParams()
-	body, _ := bybit.Client.GetRequest(params)
 	y := Kline{}
-	return bybit.GetResponse(body, &y), y
+	return bybit.ExecuteGet(params, &y), y
 }

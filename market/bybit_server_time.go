@@ -11,7 +11,6 @@ type ServerTime struct {
 
 func GetBybitServerTime() (bybit.Response, ServerTime) {
 	bybit.Client.SetEndPoint("/v5/market/time")
-	body, _ := bybit.Client.GetRequest("")
 	y := ServerTime{}
-	return bybit.GetResponse(body, &y), y
+	return bybit.ExecuteGet("", &y), y
 }
