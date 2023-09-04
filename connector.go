@@ -11,6 +11,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -21,12 +22,14 @@ const (
 )
 
 type Connector struct {
-	Url        string
-	EndPoint   string
-	ApiKey     string
-	ApiSecret  string
-	RecvWindow string
-	Signature  string
+	Params     interface{} //request params
+	Required   []string    //required fields
+	Url        string      //main, or test api url
+	EndPoint   string      //api endpoint method
+	ApiKey     string      //user api key
+	ApiSecret  string      //user api secret
+	RecvWindow string      //recvwindow= 5000 default
+	Signature  string      //user signature
 }
 
 var http_client *http.Client = &http.Client{Timeout: 10 * time.Second}
@@ -53,8 +56,62 @@ func (c *Connector) SetUrl(mode string) {
 		c.Url = TESTNET_URL
 	}
 }
-func (c *Connector) GetRequest(params string) ([]byte, int) {
+func (c *Connector) GetParams() string {
 
+	var params string
+	b, _ := json.Marshal(c.Params)
+	var m map[string]interface{}
+	_ = json.Unmarshal(b, &m)
+
+	if verifyRequired(m, c.Required) != 0 {
+		log.Default().Println("params not valid")
+		return ""
+	}
+
+	var keys []string
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	for _, k := range keys {
+
+		x := fmt.Sprint(m[k])
+
+		init_p := k + "=" + x
+		if x != "0" && params == "" {
+			params = init_p
+		}
+		if x != "0" && params != init_p {
+			params = params + "&" + k + "=" + x
+		}
+
+	}
+
+	return params
+}
+
+func verifyRequired(m map[string]interface{}, fields []string) int {
+	code := 0
+
+	for k := range m {
+		for _, x := range fields {
+			if k == x {
+				y := fmt.Sprint(m[k])
+				if y == "" || y == "0" {
+					code++
+				}
+
+			}
+		}
+
+	}
+
+	return code
+}
+func (c *Connector) GetRequest() ([]byte, int) {
+
+	params := c.GetParams()
 	now := time.Now()
 
 	unixNano := now.UnixNano()
@@ -91,8 +148,9 @@ func (c *Connector) GetRequest(params string) ([]byte, int) {
 	return body, response.StatusCode
 }
 
-func (c *Connector) PostRequest(params interface{}) ([]byte, int) {
+func (c *Connector) PostRequest() ([]byte, int) {
 
+	params := c.Params
 	now := time.Now()
 	unixNano := now.UnixNano()
 	time_stamp := unixNano / 1000000

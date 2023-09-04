@@ -3,7 +3,6 @@ package bybit
 import (
 	"encoding/json"
 	"fmt"
-	"sort"
 )
 
 const (
@@ -22,17 +21,23 @@ type Response struct {
 	Time       int         `json:"time"`
 }
 
-func ExecuteGet(params string, a any) Response {
-	body, _ := Client.GetRequest(params)
-	return GetResponse(body, a)
+func Execute(method string, params interface{}, fields []string, a any) Response {
+	Client.Params = params
+	Client.Required = fields
+	var body []byte
+	switch method {
+	case "GET":
+		body, _ = Client.GetRequest()
+	case "POST":
+		body, _ = Client.PostRequest()
+	default:
+		panic("method missing...")
+	}
+
+	return getResponse(body, a)
 }
 
-/*
-func ExecutePost() Response {
-
-}*/
-
-func GetResponse(body []byte, a any) Response {
+func getResponse(body []byte, a any) Response {
 	var r Response
 	err := json.Unmarshal(body, &r)
 	if err != nil {
@@ -42,32 +47,4 @@ func GetResponse(body []byte, a any) Response {
 	r.Result = a
 
 	return r
-}
-
-func GetParams(a any) string {
-	var params string
-	b, _ := json.Marshal(a)
-	var m map[string]interface{}
-	_ = json.Unmarshal(b, &m)
-	var keys []string
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
-	for _, k := range keys {
-
-		x := fmt.Sprint(m[k])
-
-		init_p := k + "=" + x
-		if x != "0" && params == "" {
-			params = init_p
-		}
-		if x != "0" && params != init_p {
-			params = params + "&" + k + "=" + x
-		}
-
-	}
-
-	return params
 }

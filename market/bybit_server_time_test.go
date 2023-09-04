@@ -18,6 +18,7 @@ func TestGetBybitServerTime(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+
 			if got, _ := GetBybitServerTime(); !reflect.DeepEqual(got.RetCode, tt.want) {
 				t.Errorf("GetBybitServerTime() = %v, want %v", got, tt.want)
 			}
