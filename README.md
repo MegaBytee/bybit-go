@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="400" src="https://www.pinclipart.com/picdir/middle/571-5718161_andrew-gopher-gopher-golang-png-clipart.png" alt="Andrew-gopher - Gopher Golang Png Clipart@pinclipart.com">
+  <img height="400" src="/gopher.png">
   <h1 align="center">
     Bybit-Go
     <br>
@@ -27,3 +27,4 @@ Go API V5 connector for Bybit's HTTP and WebSockets APIs.
 | [Get Mark Price Kline](/market/mark_price_kline.go) | GET /v5/market/mark-price-kline | ✔ |
 | [Get Index Price Kline](/market/mark_index_kline.go) | GET /v5/market/index-price-kline | ✔ |
 | [Get Premium Index Price Kline](/market/premium_index_price_kline.go) | GET /v5/market/premium-index-price-kline | ✔ |
+| [x](/market/name.go) | xxxxx | ✘ |
