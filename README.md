@@ -3,7 +3,7 @@
   <h1 align="center">
     Bybit-Go
     <br>
-    <a href="https://megabytee.com/"><img alt="Static Badge" src="https://img.shields.io/badge/(c)-MegaBytee.com-red"></a>
+    <a href="https://megabytee.com/"><img alt="Static Badge" src="https://img.shields.io/badge/(c)-MegaBytee.com-blue"></a>
     <a href="https://github.com/MegaBytee/bybit-go/blob/master/LICENSE" ><img alt="Static Badge" src="https://img.shields.io/badge/license-MIT-red">
     </a>
   </h1>
