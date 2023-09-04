@@ -111,6 +111,7 @@ func verifyRequired(m map[string]interface{}, fields []string) int {
 	for k := range m {
 		for _, x := range fields {
 			if k == x {
+
 				y := fmt.Sprint(m[k])
 				if y == "" || y == "0" {
 					code++
@@ -123,9 +124,11 @@ func verifyRequired(m map[string]interface{}, fields []string) int {
 
 	return code
 }
+
 func (c *Connector) GetRequest() ([]byte, int) {
 
 	params := getParams(c)
+
 	now := time.Now()
 
 	unixNano := now.UnixNano()
