@@ -1,5 +1,6 @@
 package bybit
 
+//# version 0.0.1
 import (
 	"encoding/json"
 	"fmt"
