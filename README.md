@@ -28,3 +28,31 @@ Go API V5 connector for Bybit's HTTP and WebSockets APIs.
 | [Get Index Price Kline](/market/mark_index_kline.go) | GET /v5/market/index-price-kline | ✔ |
 | [Get Premium Index Price Kline](/market/premium_index_price_kline.go) | GET /v5/market/premium-index-price-kline | ✔ |
 | [x](/market/name.go) | xxxxx | ✘ |
+
+
+## Trade
+
+| Endpoint | Description | Status |
+|:-------:|:----------- |:------:|
+| [x]() | xxxxx | ✘ |
+
+
+## Position
+
+| Endpoint | Description | Status |
+|:-------:|:----------- |:------:|
+| [x]() | xxxxx | ✘ |
+
+
+## Account
+
+| Endpoint | Description | Status |
+|:-------:|:----------- |:------:|
+| [x]() | xxxxx | ✘ |
+
+
+## WebSocket
+
+| Endpoint | Description | Status |
+|:-------:|:----------- |:------:|
+| [x]() | xxxxx | ✘ |

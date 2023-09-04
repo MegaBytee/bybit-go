@@ -22,15 +22,15 @@ const (
 )
 
 type Connector struct {
-	Params     interface{} //request params
-	Required   []string    //required fields
-	Url        string      //main, or test api url
-	EndPoint   string      //api endpoint method
-	ApiKey     string      //user api key
-	ApiSecret  string      //user api secret
-	RecvWindow string      //recvwindow= 5000 default
-	Signature  string      //user signature
-	httpClient *http.Client
+	Params     interface{}  //request params
+	Required   []string     //required fields
+	Url        string       //main, or test api url
+	EndPoint   string       //api endpoint method
+	ApiKey     string       //user api key
+	ApiSecret  string       //user api secret
+	RecvWindow string       //recvwindow= 5000 default
+	Signature  string       //user signature
+	httpClient *http.Client //http client
 }
 
 func NewConnector() *Connector {

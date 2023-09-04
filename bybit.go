@@ -1,6 +1,6 @@
 package bybit
 
-//# version 0.0.2
+//# version 0.0.3
 import (
 	"encoding/json"
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	MODE       = "test"
+	MODE       = "test" //test or main
 	API_KEY    = ""
 	API_SECRET = ""
 )
