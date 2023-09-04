@@ -1,6 +1,8 @@
 package market
 
-import "github.com/MegaBytee/bybit-go"
+import (
+	"github.com/MegaBytee/bybit-go"
+)
 
 // docs: https://bybit-exchange.github.io/docs/v5/market/tickers
 
@@ -16,7 +18,7 @@ type TickerParams struct {
 	ExpDate  string `json:"expDate"`  //Expiry date. e.g., 25DEC22. For option only
 }
 
-func GetTickers(p *TickerParams) (bybit.Response, Tickers) {
+func GetTickers(p *TickerParams) Tickers {
 	params := &bybit.CallParams{
 		Method:   "GET",
 		EndPoint: "/v5/market/tickers",
@@ -24,6 +26,7 @@ func GetTickers(p *TickerParams) (bybit.Response, Tickers) {
 		Fields:   []string{"Category"},
 	}
 	x := Tickers{}
-	return bybit.Call(params, &x), x
+	bybit.Call(params, &x)
+	return x
 
 }

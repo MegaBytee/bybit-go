@@ -4,6 +4,7 @@ package bybit
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
 const (
@@ -39,7 +40,7 @@ func getResponse(body []byte, a any) Response {
 	return r
 }
 
-func Call(c *CallParams, a any) Response {
+func Call(c *CallParams, a any) {
 	Client := NewConnector().
 		SetKeys(API_KEY, API_SECRET).
 		SetUrl(MODE).
@@ -56,5 +57,10 @@ func Call(c *CallParams, a any) Response {
 		panic("method missing...")
 	}
 
-	return getResponse(body, a)
+	x := getResponse(body, a)
+
+	if x.RetCode != 0 {
+		log.Default().Println("code=", x.RetCode)
+		log.Default().Println("msg=", x.RetMsg)
+	}
 }

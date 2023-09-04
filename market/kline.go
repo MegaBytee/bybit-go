@@ -22,7 +22,7 @@ type KlineParams struct {
 	Limit    int    `json:"limit"`    //Limit for data size per page. [1, 1000]. Default: 200
 }
 
-func GetKline(p *KlineParams) (bybit.Response, Kline) {
+func GetKline(p *KlineParams) Kline {
 	params := &bybit.CallParams{
 		Method:   "GET",
 		EndPoint: "/v5/market/kline",
@@ -30,6 +30,7 @@ func GetKline(p *KlineParams) (bybit.Response, Kline) {
 		Fields:   []string{"Category", "Symbol", "Interval"},
 	}
 	x := Kline{}
-	return bybit.Call(params, &x), x
+	bybit.Call(params, &x)
+	return x
 
 }

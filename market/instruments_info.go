@@ -21,7 +21,7 @@ type InstrumentParams struct {
 	Cursor   string `json:"cursor"`   // Use the nextPageCursor token from the response to retrieve the next page of the result set
 }
 
-func GetInstrumentsInfo(p *InstrumentParams) (bybit.Response, InstrumentsInfo) {
+func GetInstrumentsInfo(p *InstrumentParams) InstrumentsInfo {
 	params := &bybit.CallParams{
 		Method:   "GET",
 		EndPoint: "/v5/market/instruments-info",
@@ -29,6 +29,7 @@ func GetInstrumentsInfo(p *InstrumentParams) (bybit.Response, InstrumentsInfo) {
 		Fields:   []string{"Category"},
 	}
 	x := InstrumentsInfo{}
-	return bybit.Call(params, &x), x
+	bybit.Call(params, &x)
+	return x
 
 }

@@ -19,7 +19,7 @@ type OrderbookParams struct {
 	Limit    int    `json:"limit"`    //Limit size for each bid and ask ; spot: [1, 50]. Default: 1. linear&inverse: [1, 200]. Default: 25. option: [1, 25]. Default: 1.
 }
 
-func GetOrderbook(p *OrderbookParams) (bybit.Response, Orderbook) {
+func GetOrderbook(p *OrderbookParams) Orderbook {
 	params := &bybit.CallParams{
 		Method:   "GET",
 		EndPoint: "/v5/market/orderbook",
@@ -27,6 +27,7 @@ func GetOrderbook(p *OrderbookParams) (bybit.Response, Orderbook) {
 		Fields:   []string{"Category", "Symbol"},
 	}
 	x := Orderbook{}
-	return bybit.Call(params, &x), x
+	bybit.Call(params, &x)
+	return x
 
 }
