@@ -20,8 +20,13 @@ type OrderbookParams struct {
 }
 
 func GetOrderbook(p *OrderbookParams) (bybit.Response, Orderbook) {
-	bybit.Client.SetEndPoint("/v5/market/orderbook")
-	y := Orderbook{}
-	required_fields := []string{"Category", "Symbol"}
-	return bybit.Execute("GET", p, required_fields, &y), y
+	params := &bybit.CallParams{
+		Method:   "GET",
+		EndPoint: "/v5/market/orderbook",
+		Params:   p,
+		Fields:   []string{"Category", "Symbol"},
+	}
+	x := Orderbook{}
+	return bybit.Call(params, &x), x
+
 }

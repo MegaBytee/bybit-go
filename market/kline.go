@@ -23,8 +23,13 @@ type KlineParams struct {
 }
 
 func GetKline(p *KlineParams) (bybit.Response, Kline) {
-	bybit.Client.SetEndPoint("/v5/market/kline")
-	y := Kline{}
-	required_fields := []string{"Category", "Symbol", "Interval"}
-	return bybit.Execute("GET", p, required_fields, &y), y
+	params := &bybit.CallParams{
+		Method:   "GET",
+		EndPoint: "/v5/market/kline",
+		Params:   p,
+		Fields:   []string{"Category", "Symbol", "Interval"},
+	}
+	x := Kline{}
+	return bybit.Call(params, &x), x
+
 }

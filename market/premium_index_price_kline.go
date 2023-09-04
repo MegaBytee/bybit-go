@@ -6,8 +6,13 @@ import "github.com/MegaBytee/bybit-go"
 // Limit for data size per page. [1, 1000]. Default: 200
 
 func GetPremiumIndexPriceKline(p *KlineParams) (bybit.Response, Kline) {
-	bybit.Client.SetEndPoint("/v5/market/premium-index-price-kline")
-	y := Kline{}
-	required_fields := []string{"Category", "Symbol", "Interval"}
-	return bybit.Execute("GET", p, required_fields, &y), y
+	params := &bybit.CallParams{
+		Method:   "GET",
+		EndPoint: "/v5/market/premium-index-price-kline",
+		Params:   p,
+		Fields:   []string{"Category", "Symbol", "Interval"},
+	}
+	x := Kline{}
+	return bybit.Call(params, &x), x
+
 }

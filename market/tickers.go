@@ -17,8 +17,13 @@ type TickerParams struct {
 }
 
 func GetTickers(p *TickerParams) (bybit.Response, Tickers) {
-	bybit.Client.SetEndPoint("/v5/market/tickers")
-	y := Tickers{}
-	required_fields := []string{"Category"}
-	return bybit.Execute("GET", p, required_fields, &y), y
+	params := &bybit.CallParams{
+		Method:   "GET",
+		EndPoint: "/v5/market/tickers",
+		Params:   p,
+		Fields:   []string{"Category"},
+	}
+	x := Tickers{}
+	return bybit.Call(params, &x), x
+
 }

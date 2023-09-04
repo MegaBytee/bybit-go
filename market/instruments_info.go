@@ -22,8 +22,13 @@ type InstrumentParams struct {
 }
 
 func GetInstrumentsInfo(p *InstrumentParams) (bybit.Response, InstrumentsInfo) {
-	bybit.Client.SetEndPoint("/v5/market/instruments-info")
-	y := InstrumentsInfo{}
-	required_fields := []string{"Category"}
-	return bybit.Execute("GET", p, required_fields, &y), y
+	params := &bybit.CallParams{
+		Method:   "GET",
+		EndPoint: "/v5/market/instruments-info",
+		Params:   p,
+		Fields:   []string{"Category"},
+	}
+	x := InstrumentsInfo{}
+	return bybit.Call(params, &x), x
+
 }

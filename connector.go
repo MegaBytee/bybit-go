@@ -30,33 +30,47 @@ type Connector struct {
 	ApiSecret  string      //user api secret
 	RecvWindow string      //recvwindow= 5000 default
 	Signature  string      //user signature
+	httpClient *http.Client
 }
 
-var http_client *http.Client = &http.Client{Timeout: 10 * time.Second}
+func NewConnector() *Connector {
 
-func NewConnector(mode, api_key, api_secret string) Connector {
-
-	c := Connector{
-		ApiKey:     api_key,
-		ApiSecret:  api_secret,
+	return &Connector{
 		RecvWindow: "5000",
+		httpClient: &http.Client{Timeout: 10 * time.Second},
 	}
-	c.SetUrl(mode)
+
+}
+
+func (c *Connector) SetKeys(key, secret string) *Connector {
+	c.ApiKey = key
+	c.ApiSecret = secret
 	return c
 }
 
-func (c *Connector) SetEndPoint(value string) {
+func (c *Connector) SetEndPoint(value string) *Connector {
 	c.EndPoint = value
+	return c
 }
-func (c *Connector) SetUrl(mode string) {
+func (c *Connector) SetUrl(mode string) *Connector {
 	switch mode {
 	case "main":
 		c.Url = MAINNET_URL
 	case "test":
 		c.Url = TESTNET_URL
 	}
+
+	return c
 }
-func (c *Connector) GetParams() string {
+
+func (c *Connector) SetParams(p interface{}, required []string) *Connector {
+	c.Params = p
+	c.Required = required
+	return c
+
+}
+
+func getParams(c *Connector) string {
 
 	var params string
 	b, _ := json.Marshal(c.Params)
@@ -111,7 +125,7 @@ func verifyRequired(m map[string]interface{}, fields []string) int {
 }
 func (c *Connector) GetRequest() ([]byte, int) {
 
-	params := c.GetParams()
+	params := getParams(c)
 	now := time.Now()
 
 	unixNano := now.UnixNano()
@@ -134,7 +148,7 @@ func (c *Connector) GetRequest() ([]byte, int) {
 		log.Fatal(err)
 	}
 	fmt.Printf("Request Dump:\n%s", string(reqDump))
-	response, error := http_client.Do(request)
+	response, error := c.httpClient.Do(request)
 	if error != nil {
 		panic(error)
 	}
@@ -176,7 +190,7 @@ func (c *Connector) PostRequest() ([]byte, int) {
 		log.Fatal(err)
 	}
 	fmt.Printf("Request Dump:\n%s", string(reqDump))
-	response, error := http_client.Do(request)
+	response, error := c.httpClient.Do(request)
 	if error != nil {
 		panic(error)
 	}

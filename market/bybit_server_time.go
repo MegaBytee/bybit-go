@@ -10,8 +10,10 @@ type ServerTime struct {
 }
 
 func GetBybitServerTime() (bybit.Response, ServerTime) {
-	bybit.Client.SetEndPoint("/v5/market/time")
-	y := ServerTime{}
-	required_fields := []string{}
-	return bybit.Execute("GET", nil, required_fields, &y), y
+	params := &bybit.CallParams{
+		Method:   "GET",
+		EndPoint: "/v5/market/time",
+	}
+	x := ServerTime{}
+	return bybit.Call(params, &x), x
 }
