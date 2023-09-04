@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/gopher.png" height="400">
+  <img height="400" src="https://www.pinclipart.com/picdir/middle/571-5718161_andrew-gopher-gopher-golang-png-clipart.png" alt="Andrew-gopher - Gopher Golang Png Clipart@pinclipart.com">
   <h1 align="center">
     Bybit-Go
     <br>
