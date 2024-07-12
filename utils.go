@@ -2,8 +2,20 @@ package bybit
 
 import (
 	"encoding/json"
+	"log"
+	"os"
 	"strconv"
+
+	"github.com/joho/godotenv"
 )
+
+func GetEnv(key string) string {
+	err := godotenv.Load("local.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv(key)
+}
 
 // recast a to b
 func Recast(a, b any) error {

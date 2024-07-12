@@ -7,12 +7,6 @@ import (
 	"log"
 )
 
-const (
-	MODE       = "test" //test or main
-	API_KEY    = ""
-	API_SECRET = ""
-)
-
 type Response struct {
 	RetCode    int         `json:"retCode"`
 	RetMsg     string      `json:"retMsg"`
@@ -41,6 +35,9 @@ func getResponse(body []byte, a any) Response {
 }
 
 func Call(c *CallParams, a any) {
+	MODE := GetEnv("BYBIT_MODE")
+	API_KEY := GetEnv("BYBIT_API_KEY")
+	API_SECRET := GetEnv("BYBIT_API_SECRET")
 	Client := NewConnector().
 		SetKeys(API_KEY, API_SECRET).
 		SetUrl(MODE).
